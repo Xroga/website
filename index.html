@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI — Intelligence That Connects</title>
+  <style>
+    /* === CSS Variables & Reset === */
+    :root {
+      --primary: #6C63FF;
+      --primary-dark: #5A52D5;
+      --gradient-start: #0F0C29;
+      --gradient-mid: #302B63;
+      --gradient-end: #24243E;
+      --text-light: #F0F0FF;
+      --text-muted: #B0B0D0;
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+      color: var(--text-light);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* === Navigation === */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      background: rgba(15, 12, 41, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #A78BFA, #6C63FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: var(--primary);
+      color: #fff;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 3px;
+      background: var(--text-light);
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-links.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 12, 41, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.5rem 0;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    /* === Hero Section === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, #FFFFFF, #C4B5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 48px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(108, 99, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(108, 99, 255, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-light);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    /* === Animated Wave (CSS-only) === */
+    .hero-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2160 120'%3E%3Cpath fill='%236C63FF' fill-opacity='0.15' d='M0,64L72,74.7C144,85,288,107,432,106.7C576,107,720,85,864,74.7C1008,64,1152,64,1296,74.7C1440,85,1584,107,1728,106.7C1872,107,2016,85,2160,74.7L2160,120L2016,120C1872,120,1728,120,1584,120C1440,120,1296,120,1152,120C1008,120,864,120,720,120C576,120,432,120,288,120C144,120,72,120,0,120Z'/%3E%3C/svg%3E") repeat-x bottom;
+      background-size: 2160px 120px;
+      animation: wave 10s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes wave {
+      0% { background-position-x: 0; }
+      100% { background-position-x: 2160px; }
+    }
+
+    /* === Particle Dots (CSS-only) === */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(108, 99, 255, 0.4);
+      border-radius: 50%;
+      animation: float 12s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; width: 6px; height: 6px; }
+    .particle:nth-child(3) { top: 80%; left: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { top: 30%; left: 70%; animation-delay: 1s; width: 5px; height: 5px; }
+    .particle:nth-child(5) { top: 70%; left: 50%; animation-delay: 3s; }
+    .particle:nth-child(6) { top: 10%; left: 90%; animation-delay: 5s; width: 3px; height: 3px; }
+    .particle:nth-child(7) { top: 50%; left: 20%; animation-delay: 0.5s; }
+    .particle:nth-child(8) { top: 90%; left: 60%; animation-delay: 2.5s; width: 7px; height: 7px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+      50% { transform: translateY(-40px) scale(1.5); opacity: 0.8; }
+    }
+
+    /* === Section Shared === */
+    section {
+      padding: 5rem 5%;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, #A78BFA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* === Features Grid === */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2.5rem 1.8rem;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* === Pricing === */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .pricing-card.popular {
+      border-color: var(--primary);
+      background: rgba(108, 99, 255, 0.1);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin: 0.8rem 0;
+    }
+
+    .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      margin: 1.5rem 0 2rem;
+      text-align: left;
+      padding: 0;
+    }
+
+    .pricing-card li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pricing-card li::before {
+      content: "\2713";
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* === Testimonials === */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(6px);
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .stars {
+      color: #FFD43B;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card blockquote {
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+
+    .testimonial-card cite {
+      font-style: normal;
+      font-weight: 600;
+      display: block;
+    }
+
+    .testimonial-card .title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* === Contact / Demo === */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.2rem;
+      color: var(--text-light);
+      font-family: var(--font);
+      font-size: 1rem;
+      transition: var(--transition);
+      min-height: 48px;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-form .btn {
+      align-self: flex-start;
+    }
+
+    .btn-loading {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .btn-loading::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* === Demo Placeholder === */
+    .demo-placeholder {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .demo-placeholder h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .demo-placeholder p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-placeholder .calendar-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    /* === Footer === */
+    footer {
+      padding: 3rem 5%;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links a {
+      font-size: 1.5rem;
+      transition: var(--transition);
+      opacity: 0.7;
+    }
+
+    .social-links a:hover {
+      opacity: 1;
+      color: var(--primary);
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      section {
+        padding: 3rem 5%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .pricing-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .price {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Nexus AI</div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Nexus AI — Intelligence That Connects</h1>
+      <p>Seamless automation, smart insights, one platform. Transform your workflow with AI that understands your business.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Get Early Access</a>
+        <a href="#demo" class="btn btn-secondary">Watch Demo</a>
+      </div>
+    </div>
+    <div class="hero-wave"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <h2 class="section-title">Powerful Features</h2>
+    <p class="section-sub">Everything you need to build smarter, faster, and more efficiently.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Smart Automation</h3>
+        <p>Automate repetitive tasks with intelligent workflows that adapt to your business processes in real time.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Real-Time Analytics</h3>
+        <p>Get instant insights with live dashboards and predictive analytics that help you make data-driven decisions.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🧠</span>
+        <h3>Natural Language Processing</h3>
+        <p>Understand and generate human language with state-of-the-art NLP models trained on diverse datasets.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing">
+    <h2 class="section-title">Simple Pricing</h2>
+    <p class="section-sub">Choose the plan that fits your needs. No hidden fees, no surprises.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Starter</h3>
+        <div class="price">$29 <span>/mo</span></div>
+        <ul>
+          <li>Up to 5 users</li>
+          <li>10,000 API calls/month</li>
+          <li>Basic analytics</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary">Get Started</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <h3>Pro</h3>
+        <div class="price">$79 <span>/mo</span></div>
+        <ul>
+          <li>Up to 25 users</li>
+          <li>100,000 API calls/month</li>
+          <li>Advanced analytics</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Unlimited users</li>
+          <li>Unlimited API calls</li>
+          <li>Full analytics suite</li>
+          <li>Dedicated support</li>
+          <li>On-premise deployment</li>
+          <li>Custom SLA</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-sub">Trusted by innovative teams around the world.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Nexus AI transformed our customer service. Response times dropped by 60% and satisfaction scores are at an all-time high."</blockquote>
+        <cite>Sarah Chen</cite>
+        <span class="title">CTO, TechFlow Inc.</span>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The analytics capabilities are incredible. We're making decisions in minutes that used to take weeks of manual analysis."</blockquote>
+        <cite>Marcus Johnson</cite>
+        <span class="title">VP of Data, CloudScale</span>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Implementation was seamless and the team at Nexus AI provided exceptional support throughout the entire process."</blockquote>
+        <cite>Elena Rodriguez</cite>
+        <span class="title">CEO, InnovateLab</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Demo Section -->
+  <section id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-sub">Ready to transform your business? Let's talk.</p>
+    <div class="contact-grid">
+      <div>
+        <form class="contact-form" id="contactForm">
+          <input type="text" placeholder="Your Name" id="name" required>
+          <input type="email" placeholder="Your Email" id="email" required>
+          <textarea placeholder="Tell us about your project" id="message" required></textarea>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Send Message</button>
+        </form>
+      </div>
+      <div id="demo">
+        <div class="demo-placeholder">
+          <div class="calendar-icon">📅</div>
+          <h3>Book a Demo</h3>
+          <p>Schedule a personalized demo with our team to see Nexus AI in action.</p>
+          <a href="#" class="btn btn-secondary">Schedule Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-links">
+      <a href="#" aria-label="Twitter">🐦</a>
+      <a href="#" aria-label="LinkedIn">💼</a>
+      <a href="#" aria-label="GitHub">🐙</a>
+    </div>
+    <p>&copy; 2025 Nexus AI. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile Navigation Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Close mobile nav when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Form Validation and Loading Animation
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      // Basic validation
+      if (!name || !email || !message) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // Simulate loading
+      submitBtn.classList.add('btn-loading');
+      submitBtn.textContent = 'Sending...';
+
+      setTimeout(() => {
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.textContent = 'Send Message';
+        alert('Thank you! We will get back to you soon.');
+        form.reset();
+      }, 2000);
+    });
+
+    // Smooth scroll for anchor links (fallback for older browsers)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+  <!-- Absorbing the multiverse of data to emit the singularity of truth. -->
+</body>
+</html>
